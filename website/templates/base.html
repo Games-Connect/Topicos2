@@ -31,45 +31,87 @@
 
     <!-- Header Section Begin -->
     <header class="header">
-      <div class="container">
-          <div class="row">
-              <div class="col-lg-2">
-                  <div class="header__logo">
-                      <a href="./">
-                          <img src="../static/img/logo.png" alt="">
-                      </a>
-                  </div>
-              </div>
-              <div class="col-lg-8">
-                  <div class="header__nav">
-                      <nav class="header__menu mobile-menu">
-                          <ul>
-                              <li class="active"><a href="./">Inicio</a></li>
-                              <li><a href="./categoria">Categorias <span class="arrow_carrot-down"></span></a>
-                                  <ul class="dropdown">
-                                    {% for category in categories %}
-                                        <li><a href='./categoria?id={{category.id}}'>{{category.name}}</a></li>
-                                    {% endfor %}
-                                  </ul>
-                              </li>
-                              <li><a href="./blog.html">About</a></li>
-                              <li><a href="#">Contacts</a></li>
-                          </ul>
-                      </nav>
-                  </div>
-              </div>
-              <div class="col-lg-2">
-                  <div class="header__right">
-                      <a href="#" class="search-switch"><span class="icon_search"></span></a>
-                      <a href="./login.html"><span class="icon_profile"></span></a>
-                  </div>
-              </div>
-          </div>
-          <div id="mobile-menu-wrap"></div>
-      </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a href="./">
+                            <img src="../static/img/logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="header__nav">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li><a href="./">Inicio</a></li>
+                                <li><a href="#">Categorias <span class="arrow_carrot-down"></span></a>
+                                    <ul class="dropdown">
+                                        {% for category in categories %}
+                                            <li><a href='./categoria?id={{category.id}}'>{{category.name}}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                <li><a href="./sobre">Sobre</a></li>
+                                {% if user.is_admin %}
+                                    <li><a href="./admin">Administrador</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__nav">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li><a href="#" class="search-switch"><span class="icon_search"></span></a></li>
+                                {% if user.is_authenticated %}
+                                    <li><a href="#">Bem-vindo<span class="arrow_carrot-down"></span></a>
+                                        <ul class="dropdown" style="width: max-content;">
+                                            {% if user.is_authenticated %}
+                                                <li><a href="./conta?id={{user.id}}"><span>{{user.first_name}}</span></a></li>
+                                                <li><a href="./logout"><span>Sair</span></a></li>
+                                            {% else %}
+                                                <li><a href="./conta?id={{user.id}}"><span>{{user.first_name}}</span></a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                {% else %}
+                                    <li><a href="./login"><span class="icon_profile"></span></a></li>
+                                {% endif %}
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
     </header>
 
-    <div class="container">{% block content %} {% endblock %}</div>
+    {% with messages = get_flashed_messages(with_categories=true) %} 
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'error' %}
+                    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        {% else %}
+                        <div class="alert alert-success alter-dismissable fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %} 
+            {% endfor %} 
+        {% endif %} 
+    {% endwith %}
+
+    {% block content %} {% endblock %}
 
     <!-- Footer Section Begin -->
     <footer class="footer">
@@ -83,22 +125,6 @@
                       <a href="./"><img src="../static/img/logo.png" alt=""></a>
                   </div>
               </div>
-              <!-- <div class="col-lg-6">
-                  <div class="footer__nav">
-                      <ul>
-                        <li class="active"><a href="./index.html">Inicio</a></li>
-                        <li><a href="./categoria">Categorias <span class="arrow_carrot-down"></span></a>
-                            <ul class="dropdown">
-                              {% for categoria in categorias %}
-                                  <li><a href='./categoria?id={{categoria.id}}'>{{categoria.name}}</a></li>
-                              {% endfor %}
-                            </ul>
-                        </li>
-                        <li><a href="./blog.html">About</a></li>
-                        <li><a href="#">Contacts</a></li>
-                      </ul>
-                  </div>
-              </div> -->
               <div class="col-lg-3">
                   <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
@@ -129,79 +155,26 @@
     <script src="../static/js/jquery.slicknav.js"></script>
     <script src="../static/js/owl.carousel.min.js"></script>
     <script src="../static/js/main.js"></script>
-
-    <script type="text/javascript">
-        function getPageList(totalPages, page, maxLength){
-            function range(start, end){
-                return Array.from(Array(end - start + 1), (_, i) => i + start);
-            }
-            var sideWidth = maxLength < 9 ? 1 : 2;
-            var leftWidth = (maxLength - sideWidth * 2 - 3) >> 1;
-            var rightWidth = (maxLength - sideWidth * 2 - 3) >> 1;
-
-            if(totalPages <= maxLength){
-                return range(1, totalPages);
-            }
-
-            if(page <= maxLength - sideWidth - 1 - rightWidth){
-                return range(1, maxLength - sideWidth - 1).concat(0, range(totalPages - sideWidth + 1, totalPages));
-            }
-
-            if(page >= totalPages - sideWidth - 1 - rightWidth){
-                return range(1, sideWidth).concat(0, range(totalPages - sideWidth - 1 - rightWidth - leftWidth, totalPages));
-            }
-
-            return range(1, sideWidth).concat(0, range(page - leftWidth, page + rightWidth), 0, range(totalPages - sideWidth + 1, totalPages));
+    <script>
+        function open_file(){
+            $("#prod_img").click();
         }
 
-        $(function(){
-            var numberOfItems = $(".card-content .product__item").length;
-            var limitPerPage = 6;
-            var totalPages = Math.ceil(numberOfItems / limitPerPage);
-            var paginationSize = 7;
-            var currentPage;
-
-            function showPage(wichPage){
-                if(wichPage < 1 || wichPage > totalPages) return false;
-
-                currentPage = wichPage;
-
-                $(".card-content .product__item").hide().slice((currentPage - 1) * limitPerPage, currentPage * limitPerPage).show();
-
-                $(".product__pagination a").slice(1, -1).remove();
-                
-                getPageList(totalPages, currentPage, paginationSize).forEach(item => {
-                    $("<a>").toggleClass("current-page", item === currentPage)
-                    .attr({href: "javascript:void(0)"}).text(item || "...").insertBefore(".next-page");
-                });
-                $(".previous-page").toggleClass("disable", currentPage === 1);
-                $(".next-page").toggleClass("disable", currentPage === totalPages);
-                return true;
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    // $('#image_pre')
+                    //     .attr('src', e.target.result)
+                    
+                    // $("#image_pre").show()
+                    $(image_db).css('background-image', 'url(' + e.target.result + ')');
+                };
+                reader.readAsDataURL(input.files[0]);
             }
-
-            $(".product__pagination").append(
-                $("<a>").addClass("previous-page").attr({href: "javascript:void(0)"}).text("Prev"),
-                $("<a>").addClass("next-page").attr({href: "javascript:void(0)"}).text("Next"),
-            );
-
-            $(".card-content").show();
-            showPage(1);
-
-            $(document).on("click", ".product__pagination a:not(.current-page)", function(){
-                if(!!parseInt($(this).text()))
-                    return showPage(+$(this).text());
-            });
-
-            $(".next-page").on("click", function(){
-                debugger
-                return showPage(currentPage + 1);
-            });
-
-            $(".previous-page").on("click", function(){
-                debugger
-                return showPage(currentPage - 1);
-            });
-        });
+        }
+    
+        
     </script>
   </body>
 </html>

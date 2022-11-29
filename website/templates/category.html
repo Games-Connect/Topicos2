@@ -1,4 +1,9 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} 
+{% extends "base.html" %} 
+    {% block title %}
+        {% for category in categories if category.id|string == id_category %}
+        Categoria | {{category.name}}
+        {% endfor %}
+    {% endblock %} 
 {% block content%}
 
     <!-- Breadcrumb Begin -->
@@ -8,11 +13,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
                         <a href="./"><i class="fa fa-home"></i> Inicio</a>
-                        {% if not id_category %}
-                            <span>Categorias</span>
-                        {% else %}
-                            <a href="./categoria">Categorias</a>
-                        {% endif %}
+                        <a href="#">Categorias</a>
                         {% for category in categories if category.id|string == id_category %}
                             <span>{{category.name}}</span>
                         {% endfor %}
@@ -45,46 +46,26 @@
                             </div>
                         </div>
                         <div class="row card-content" style="display: none;">
-                            {% if not id_category %}
-                                {% for category in categories %}
-                                    {% for product in category.products %}
+                            {% for category in categories if category.id|string == id_category %}
+                                {% for product in category.products %}
+                                    <a href="./produtos-detalhes?id={{product.id}}">
                                         <div class="product__item col-lg-4 col-md-6 col-sm-6">
-                                            <div class="product__item__pic set-bg" data-setbg="../static/img/popular/popular-1.jpg">
+                                            <div class="product__item__pic set-bg" data-setbg="../static/img/{{product.id}}.{{product.file_type}}">
                                                 <div class="ep">{{product.name}}</div>
+                                                <div class="view">{{"R$0,00" if not product.price  else "R$ " + product.price|string }}</div>
                                             </div>
                                             <div class="product__item__text">
                                                 <ul>
                                                     {% for subCat in product.sub_categories %}
-                                                    <li>{{subCat.name}}</li>
+                                                        <li>{{subCat.name}}</li>
                                                     {% endfor %}
                                                 </ul>
                                                 <h5><a href="#">{{product.description}}</a></h5>
                                             </div>
                                         </div>
-                                    {% endfor %}
+                                    </a>
                                 {% endfor %}
-                            {% else %}
-                                {% for category in categories if category.id|string == id_category %}
-                                    {% for product in category.products %}
-                                        <div class="col-lg-4 col-md-6 col-sm-6">
-                                            <div class="product__item">
-                                                <div class="product__item__pic set-bg" data-setbg="../static/img/popular/popular-1.jpg">
-                                                    <div class="ep">{{product.name}}</div>
-                                                </div>
-                                                <div class="product__item__text">
-                                                    <ul>
-                                                        {% for subCat in product.sub_categories %}
-                                                        <li>{{subCat.name}}</li>
-                                                        {% endfor %}
-                                                    </ul>
-                                                    <h5><a href="#">{{product.description}}</a></h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                {% endfor %}
-                            {% endif %}                            
-                            
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="product__pagination">
