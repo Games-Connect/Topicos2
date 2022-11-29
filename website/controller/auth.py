@@ -82,7 +82,7 @@ def sign_up():
             new_user = User(email=email, first_name=first_name, last_name=last_name, password=generate_password_hash(password, method='sha256'), is_admin=False)
             db.session.add(new_user)
             db.session.commit()
-            login_user(user, remember=True)
+            login_user(new_user, remember=True)
             flash('Conta criada!', category='success')
             return redirect(url_for('views.home'))
 

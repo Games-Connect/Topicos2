@@ -5,7 +5,7 @@
     <div class="container">
         <div class="hero__slider owl-carousel">
             {% for category in categories %}
-                {% for product_sliced in category.products | slice(2) %}
+                {% for product_sliced in category.products | slice(1) %}
                     {% set product = product_sliced | random%}
                     <div class="hero__items set-bg" data-setbg="../static/img/{{product.id}}.{{product.file_type}}">
                         <div class="row">
