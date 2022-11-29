@@ -10,6 +10,7 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.eZae_lkw7J-QAbi2NXcEfVyxNhYjyMOOHd9we9rsZy0'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}' #'postgresql://postgres:awdasdawd2602@localhost:5433/TopicosDb'
+    
     db.init_app(app)
 
     from .controller import views, auth

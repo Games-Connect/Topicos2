@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="normal__breadcrumb__text">
-                    <h2>Cadastro</h2>
+                    <h2>Conta</h2>
                     <p>Bem-vindo à Games Connect.</p>
                 </div>
             </div>
@@ -21,18 +21,18 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="login__form">
-                    <h3>Cadastro</h3>
+                    <h3>Alterar dados</h3>
                     <form method="POST">
                         <div class="input__item">
-                            <input type="email" id="email" name="email" placeholder="E-mail">
+                            <input type="email" id="email" name="email" placeholder="E-mail" value="{{user.email}}">
                             <span class="icon_mail"></span>
                         </div>
                         <div class="input__item">
-                            <input type="text" id="first_name" name="first_name" placeholder="Seu primeiro nome">
+                            <input type="text" id="first_name" name="first_name" placeholder="Seu primeiro nome" value="{{user.first_name}}">
                             <span class="icon_profile"></span>
                         </div>
                         <div class="input__item">
-                            <input type="text" id="last_name" name="last_name" placeholder="Seu sobrenome">
+                            <input type="text" id="last_name" name="last_name" placeholder="Seu sobrenome" value="{{user.last_name}}">
                             <span class="icon_profile"></span>
                         </div>
                         <div class="input__item">
@@ -43,18 +43,8 @@
                             <input type="password" class="form-group" id="password2" name="password2" placeholder="Confirme a senha">
                             <span class="icon_lock"></span>
                         </div>
-                        <button type="submit" class="site-btn">Cadastrar</button>
+                        <button type="submit" class="site-btn">Salvar</button>
                     </form>
-                    <h5>Já tem uma conta? <a href="./login">Entre!</a></h5>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="login__social__links">
-                    <h3>Entre com:</h3>
-                    <ul>
-                        <li><a href="#" class="facebook"><i class="fa fa-facebook"></i>Entrar com o Facebook</a></li>
-                        <li><a href="#" class="google"><i class="fa fa-google"></i> Entrar com o Google</a></li>
-                    </ul>
                 </div>
             </div>
         </div>

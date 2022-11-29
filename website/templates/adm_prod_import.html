@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block title %} Importar Jogos {% endblock %} 
+{% block content%}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="./"><i class="fa fa-home"></i> Home</a>
+                    <a href="./admin">Administrador</a>
+                    <span>Importar jogos</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Anime Section Begin -->
+<section class="anime-details spad">
+    <div class="container">
+        <div class="anime__details__content">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <input type="file" id="prod_import" accept="application/JSON" name="prod_import" style="background: white;">
+                        
+                        <button type="submit" class="site-btn">SALVAR</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- Anime Section End -->
+
+{% endblock %}

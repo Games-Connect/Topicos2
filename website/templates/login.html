@@ -1,16 +1,60 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} 
 {% block content%}
-<form method="POST">
-    <h3 align="center">Login</h3>
-    <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" class="form-group" id="email" name="email" placeholder="Enter email">
+<!-- Normal Breadcrumb Begin -->
+<section class="normal-breadcrumb set-bg" data-setbg="../static/img/normal-breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="normal__breadcrumb__text">
+                    <h2>Login</h2>
+                    <p>Bem-vindo à Games Connect.</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-group" id="password" name="password" placeholder="Enter password">
+</section>
+<!-- Normal Breadcrumb End -->
+
+<!-- Login Section Begin -->
+<section class="login spad">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="login__form">
+                <h3>Login</h3>
+                <form method="POST">
+                    <div class="input__item">
+                        <input type="email" id="email" name="email" placeholder="E-mail">
+                        <span class="icon_mail"></span>
+                    </div>
+                    <div class="input__item">
+                        <input type="password" id="password" name="password" placeholder="Senha">
+                        <span class="icon_lock"></span>
+                    </div>
+                    <button type="submit" class="site-btn">Entrar</button>
+                </form>
+                <a href="./esqueceu-senha" class="forget_pass">Esqueceu a senha?</a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="login__register">
+                <h3>Não tem uma conta?</h3>
+                <a href="./cadastro" class="primary-btn">Cadastre agora!</a>
+            </div>
+        </div>
     </div>
-    <br>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+    <div class="login__social">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-6">
+                <div class="login__social__links">
+                    <span>ou</span>
+                    <ul>
+                        <li><a href="#" class="facebook"><i class="fa fa-facebook"></i>Entrar com o Facebook</a></li>
+                        <li><a href="#" class="google"><i class="fa fa-google"></i> Entrar com o Google</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Login Section End -->
 {% endblock %}

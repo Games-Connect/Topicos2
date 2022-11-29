@@ -1056,7 +1056,6 @@ ol {
 }
 
 .anime__details__widget ul li span {
-	color: #b7b7b7;
 	width: 115px;
 	display: inline-block;
 }
@@ -1724,6 +1723,11 @@ ol {
 .login__form {
 	position: relative;
 	padding-left: 145px;
+}
+
+.login__form__logged {
+	position: relative;
+	padding-left: 38%;
 }
 
 .login__form:after {
