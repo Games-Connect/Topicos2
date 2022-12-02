@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="../static/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css" type="text/css">
   </head>
   <body>
     <!-- Page Preloder -->
@@ -36,7 +38,7 @@
                 <div class="col-lg-2">
                     <div class="header__logo">
                         <a href="./">
-                            <img src="../static/img/logo.png" alt="">
+                            <img src="../static/img/LogoGamesConnect.png" alt="">
                         </a>
                     </div>
                 </div>
@@ -54,7 +56,13 @@
                                 </li>
                                 <li><a href="./sobre">Sobre</a></li>
                                 {% if user.is_admin %}
-                                    <li><a href="./admin">Administrador</a></li>
+                                    <li><a href="#">Administrador <span class="arrow_carrot-down"></span></a>
+                                        <ul class="dropdown">
+                                            <li><a href='./admin-produto'>Jogos</a></li>
+                                            <li><a href='./admin-usuario'>Usuarios</a></li>
+                                            <li><a href='./admin-categoria'>Categorias</a></li>
+                                        </ul>
+                                    </li>
                                 {% endif %}
                             </ul>
                         </nav>
@@ -68,12 +76,8 @@
                                 {% if user.is_authenticated %}
                                     <li><a href="#">Bem-vindo<span class="arrow_carrot-down"></span></a>
                                         <ul class="dropdown" style="width: max-content;">
-                                            {% if user.is_authenticated %}
-                                                <li><a href="./conta?id={{user.id}}"><span>{{user.first_name}}</span></a></li>
-                                                <li><a href="./logout"><span>Sair</span></a></li>
-                                            {% else %}
-                                                <li><a href="./conta?id={{user.id}}"><span>{{user.first_name}}</span></a></li>
-                                            {% endif %}
+                                            <li><a href="./conta?id={{user.id}}"><span>{{user.first_name}}</span></a></li>
+                                            <li><a href="./logout"><span>Sair</span></a></li>
                                         </ul>
                                     </li>
                                 {% else %}
@@ -155,6 +159,9 @@
     <script src="../static/js/jquery.slicknav.js"></script>
     <script src="../static/js/owl.carousel.min.js"></script>
     <script src="../static/js/main.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+    
     <script>
         function open_file(){
             $("#prod_img").click();
@@ -174,7 +181,30 @@
             }
         }
     
+        function editarProduto(id){
+            window.location.href='admin-produto-editar?id=' + id
+        }
+
+        function excluirProduto(id){
+            window.location.href='admin-produto-remover?id=' + id
+        }
+
+        function editarUsuario(id){
+            window.location.href='admin-usuario-editar?id=' + id
+        }
         
+        function excluirUsuario(id){
+            window.location.href='admin-usuario-remover?id=' + id
+        }
+        
+        function editarCategoria(id){
+            window.location.href='admin-categoria-editar?id=' + id
+        }
+
+        function excluirCategoria(id){
+            window.location.href='admin-categoria-remover?id=' + id
+        }
+
     </script>
   </body>
 </html>

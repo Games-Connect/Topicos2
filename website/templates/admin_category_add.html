@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Esqueci a senha{% endblock %} 
+{% extends "base.html" %} {% block title %}Edição{% endblock %} 
 {% block content%}
  <!-- Normal Breadcrumb Begin -->
  <section class="normal-breadcrumb set-bg" data-setbg="../static/img/Banner.png">
@@ -11,27 +11,24 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="normal__breadcrumb__text">
-                    <h2>Esqueci a senha</h2>
+                    <h2>Edição de categoria</h2>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-6">
                 <div class="login__form">
-                    <h3>Alterar senha</h3>
+                    <h3>Alterar dados</h3>
                     <form method="POST">
                         <div class="input__item">
-                            <input type="email" id="email" name="email" placeholder="E-mail" value="{{user.email}}">
-                            <span class="icon_mail"></span>
+                            <input type="text" id="name" name="name" placeholder="Nome da categoria" value="{{category.name}}">
+                            <span class="icon_menu"></span>
                         </div>
-                        <div class="input__item">
-                            <input type="password" id="password" name="password" placeholder="Nova senha">
-                            <span class="icon_lock"></span>
+                        <div style="margin-bottom: 10px;">
+                            <input type="checkbox" id="status" name="status" placeholder="Status" {{ "checked" if category.status == True }}>
+                            <span style="color:white">Status</span>
                         </div>
-                        <div class="input__item">
-                            <input type="password" class="form-group" id="password2" name="password2" placeholder="Confirme a nova senha">
-                            <span class="icon_lock"></span>
-                        </div>
+                        
                         <button type="submit" class="site-btn">Salvar</button>
                     </form>
                 </div>

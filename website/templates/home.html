@@ -6,23 +6,27 @@
         <div class="hero__slider owl-carousel">
             {% for category in categories %}
                 {% for product_sliced in category.products | slice(1) %}
-                    {% set product = product_sliced | random%}
-                    <div class="hero__items set-bg" data-setbg="../static/img/{{product.id}}.{{product.file_type}}">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="hero__text">
-                                    <div class="label">{{category.name}}</div>
-                                    <h2>{{product.name}}</h2>
-                                    {% if product.description.__len__() > 20 %}
-                                        <p>{{product.description[:20]}}...</p>
-                                    {% else %}
-                                        <p>{{product.description}}</p>
-                                    {% endif %}
-                                    <a href="./produtos-detalhes?id={{product.id}}"><span>Comprar agora</span> <i class="fa fa-angle-right"></i></a>
+                    {%  if product_sliced.__len__() > 0 %}
+                        {% set product = product_sliced | random %}
+                    
+                        <div class="hero__items set-bg" data-setbg="../static/img/{{product.id}}.{{product.file_type}}">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="hero__text">
+                                        <div class="label">{{category.name}}</div>
+                                        <h2>{{product.name}}</h2>
+                                        {% if product.description.__len__() > 20 %}
+                                            <p>{{product.description[:20]}}...</p>
+                                        {% else %}
+                                            <p>{{product.description}}</p>
+                                        {% endif %}
+                                        <a href="./produtos-detalhes?id={{product.id}}"><span>Comprar agora</span> <i class="fa fa-angle-right"></i></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
+
                 {% endfor %}
             {% endfor %}
         </div>
@@ -60,7 +64,12 @@
                                                         <li>{{subCat.name}}</li>
                                                     {% endfor %}
                                                 </ul>
-                                                <h5><a href="#">{{product.description}}</a></h5>
+                                                
+                                                {% if product.description.__len__() > 20 %}
+                                                    <h5><a href="#">{{product.description[:20]}}...</a></h5>
+                                                {% else %}
+                                                    <h5><a href="#">{{product.description}}</a></h5>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </a>
