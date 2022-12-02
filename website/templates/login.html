@@ -1,7 +1,12 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} 
 {% block content%}
 <!-- Normal Breadcrumb Begin -->
-<section class="normal-breadcrumb set-bg" data-setbg="../static/img/normal-breadcrumb.jpg">
+<section class="normal-breadcrumb set-bg" data-setbg="../static/img/Banner.png">
+</section>
+<!-- Normal Breadcrumb End -->
+
+<!-- Login Section Begin -->
+<section class="login spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -11,46 +16,41 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- Normal Breadcrumb End -->
-
-<!-- Login Section Begin -->
-<section class="login spad">
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="login__form">
-                <h3>Login</h3>
-                <form method="POST">
-                    <div class="input__item">
-                        <input type="email" id="email" name="email" placeholder="E-mail">
-                        <span class="icon_mail"></span>
-                    </div>
-                    <div class="input__item">
-                        <input type="password" id="password" name="password" placeholder="Senha">
-                        <span class="icon_lock"></span>
-                    </div>
-                    <button type="submit" class="site-btn">Entrar</button>
-                </form>
-                <a href="./esqueceu-senha" class="forget_pass">Esqueceu a senha?</a>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="login__register">
-                <h3>Não tem uma conta?</h3>
-                <a href="./cadastro" class="primary-btn">Cadastre agora!</a>
-            </div>
-        </div>
-    </div>
-    <div class="login__social">
-        <div class="row d-flex justify-content-center">
+        <div class="row">
             <div class="col-lg-6">
-                <div class="login__social__links">
-                    <span>ou</span>
-                    <ul>
-                        <li><a href="#" class="facebook"><i class="fa fa-facebook"></i>Entrar com o Facebook</a></li>
-                        <li><a href="#" class="google"><i class="fa fa-google"></i> Entrar com o Google</a></li>
-                    </ul>
+                <div class="login__form">
+                    <h3>Login</h3>
+                    <form method="POST">
+                        <div class="input__item">
+                            <input type="email" id="email" name="email" placeholder="E-mail">
+                            <span class="icon_mail"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="password" id="password" name="password" placeholder="Senha">
+                            <span class="icon_lock"></span>
+                        </div>
+                        <button type="submit" class="site-btn">Entrar</button>
+                    </form>
+                    <a href="./esqueceu-senha" class="forget_pass">Esqueceu a senha?</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login__register">
+                    <h3>Não tem uma conta?</h3>
+                    <a href="./cadastro" class="primary-btn">Cadastre agora!</a>
+                </div>
+            </div>
+        </div>
+        <div class="login__social">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-6">
+                    <div class="login__social__links">
+                        <span>ou</span>
+                        <ul>
+                            <li><a href="#" class="facebook"><i class="fa fa-facebook"></i>Entrar com o Facebook</a></li>
+                            <li><a href="#" class="google"><i class="fa fa-google"></i> Entrar com o Google</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

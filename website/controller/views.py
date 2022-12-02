@@ -120,16 +120,14 @@ def account():
 
     return render_template("account.html", user=current_user, categories=categories)
 
-@views.route('/admin', methods=['GET','POST'])
+@views.route('/admin-produto', methods=['GET','POST'])
 @login_required
-def admin():
-    categories = Category.query.all()
+def admin_product():
+    return render_template("admin_product.html", user=current_user, categories=Category.query.all())
 
-    return render_template("admin.html", user=current_user, categories=categories)
-
-@views.route('/adm-prod-editar', methods=['GET', 'POST'])
+@views.route('/admin-produto-editar', methods=['GET', 'POST'])
 @login_required
-def adm_products_edit():
+def admin_product_edit():
 
     id_product = request.args.get('id')
     product = Product.query.get(id_product)
@@ -161,16 +159,14 @@ def adm_products_edit():
 
         db.session.commit()
         flash('Produto alterado com sucesso!', category='success')
-        return redirect(url_for('views.admin'))
+        return redirect(url_for('views.admin_product'))
 
 
-    return render_template("adm_prod_edit.html", user=current_user, categories=categories, categories_product=categories_product, product=product)
+    return render_template("admin_prod_edit.html", user=current_user, categories=categories, categories_product=categories_product, product=product)
 
-@views.route('/adm-prod-adicionar', methods=['GET', 'POST'])
+@views.route('/admin-prod-adicionar', methods=['GET', 'POST'])
 @login_required
-def adm_products_add():
-
-    categories = Category.query.all()
+def admin_products_add():
 
     if request.method == 'POST':
         name = request.form.get('name')
@@ -193,22 +189,32 @@ def adm_products_add():
             new_product.file_type=get_filetype(file.mimetype)
 
         db.session.commit()
-        flash('Produto alterado com sucesso!', category='success')
-        return redirect(url_for('views.admin'))
+        flash('Produto adicionado com sucesso!', category='success')
+        return redirect(url_for('views.admin_product'))
 
 
-    return render_template("adm_prod_add.html", user=current_user, categories=categories)
+    return render_template("admin_prod_add.html", user=current_user, categories=Category.query.all())
 
-@views.route('/adm-prod-importar', methods=['GET', 'POST'])
+@views.route('/admin-produto-remover', methods=['GET', 'POST'])
 @login_required
-def adm_products_import():
+def admin_product_delete():
+
+    id_product = request.args.get('id')
+    product = Product.query.get(id_product)
+
+    db.session.delete(product)  
+    db.session.commit()
+    flash('Jogo removida com sucesso!', category='success')
+    return redirect(url_for('views.admin_product'))
+
+@views.route('/admin-prod-importar', methods=['GET', 'POST'])
+@login_required
+def admin_products_import():
 
     categories = Category.query.all()
 
     if request.method == 'POST':
         file = request.files['prod_import']
-
-        db.session.execute('DELETE FROM product')
 
         content = json.loads(file.read())
         # new_product = Product(name=name,description=description, studio=studio, date_launch=datetime.datetime.strptime(date_launch, '%Y-%m-%d'), price=price, category_id=category)
@@ -224,6 +230,128 @@ def adm_products_import():
         return redirect(url_for('views.admin'))
 
 
-    return render_template("adm_prod_import.html", user=current_user, categories=categories)
+    return render_template("admin_prod_import.html", user=current_user, categories=categories)
+
+@views.route('/admin-usuario', methods=['GET', 'POST'])
+@login_required
+def admin_user():
+    return render_template("admin_user.html", user=current_user, categories=Category.query.all(), users=User.query.all())
+
+@views.route('/admin-usuario-editar', methods=['GET', 'POST'])
+@login_required
+def admin_user_edit():
+
+    id_user = request.args.get('id')
+    user = User.query.get(id_user)
+
+    if request.method == 'POST':
+        email = request.form.get('email')
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        is_admin = request.form.get('is_admin')
+
+        user = User.query.filter_by(email=email).first()
+        
+        if len(first_name) < 2:
+            flash('Nome deve ser pelo menos 3 caractéres.', category='error')
+        elif len(last_name) < 2:
+            flash('Sobrenome deve ser pelo menos 3 caractéres.', category='error')
+        else:
+            user.email=email
+            user.first_name=first_name
+            user.last_name=last_name
+            if is_admin:
+                user.is_admin=True
+            else:
+                user.is_admin=False
+
+            db.session.commit()
+            flash('Dados salvos com sucesso!', category='success')
+            return redirect(url_for('views.admin_user'))
+
+
+    return render_template("admin_user_edit.html", user=current_user, categories=Category.query.all(), user_db=user)
+
+@views.route('/admin-usuario-remover', methods=['GET', 'POST'])
+@login_required
+def admin_user_delete():
+
+    id_user = request.args.get('id')
+    user = User.query.get(id_user)
+
+    db.session.delete(user)  
+    db.session.commit()
+    flash('Usuário removida com sucesso!', category='success')
+    return redirect(url_for('views.admin_user'))
+
+@views.route('/admin-categoria', methods=['GET', 'POST'])
+@login_required
+def admin_category():
+    return render_template("admin_category.html", user=current_user, categories=Category.query.all())
+
+@views.route('/admin-categoria-editar', methods=['GET', 'POST'])
+@login_required
+def admin_category_edit():
+
+    id_category = request.args.get('id')
+    category = Category.query.get(id_category)
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        status = request.form.get('status')
+
+        if len(name) < 2:
+            flash('Nome deve ser pelo menos 3 caractéres.', category='error')
+        else:
+            category.name=name
+            if status:
+                category.status=True
+            else:
+                category.status=False
+ 
+            db.session.commit()
+            flash('Categoria editada com sucesso!', category='success')
+            return redirect(url_for('views.admin_category'))
+
+
+    return render_template("admin_category_edit.html", user=current_user, categories=Category.query.all(), category=category)
+
+@views.route('/admin-categoria-adicionar', methods=['GET', 'POST'])
+@login_required
+def admin_category_add():
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        status = request.form.get('status')
+
+        if len(name) < 2:
+            flash('Nome deve ser pelo menos 3 caractéres.', category='error')
+        else:
+            if status:
+                status=True
+            else:
+                status=False
+
+            new_category = Category(name=name,status=status)
+            db.session.add(new_category)  
+            db.session.commit()
+            flash('Categoria criada com sucesso!', category='success')
+            return redirect(url_for('views.admin_category'))
+
+
+    return render_template("admin_category_edit.html", user=current_user, categories=Category.query.all(), category=category)
+
+@views.route('/admin-categoria-remover', methods=['GET', 'POST'])
+@login_required
+def admin_category_delete():
+
+    id_category = request.args.get('id')
+    category = Category.query.get(id_category)
+
+    db.session.delete(category)  
+    db.session.commit()
+    flash('Categoria removida com sucesso!', category='success')
+    return redirect(url_for('views.admin_category'))
+
 
 

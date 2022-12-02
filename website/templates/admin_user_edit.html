@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Esqueci a senha{% endblock %} 
+{% extends "base.html" %} {% block title %}Edição{% endblock %} 
 {% block content%}
  <!-- Normal Breadcrumb Begin -->
  <section class="normal-breadcrumb set-bg" data-setbg="../static/img/Banner.png">
@@ -11,27 +11,32 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="normal__breadcrumb__text">
-                    <h2>Esqueci a senha</h2>
+                    <h2>Edição de usuário</h2>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-6">
                 <div class="login__form">
-                    <h3>Alterar senha</h3>
+                    <h3>Alterar dados</h3>
                     <form method="POST">
                         <div class="input__item">
-                            <input type="email" id="email" name="email" placeholder="E-mail" value="{{user.email}}">
+                            <input type="email" id="email" name="email" placeholder="E-mail" value="{{user_db.email}}">
                             <span class="icon_mail"></span>
                         </div>
                         <div class="input__item">
-                            <input type="password" id="password" name="password" placeholder="Nova senha">
-                            <span class="icon_lock"></span>
+                            <input type="text" id="first_name" name="first_name" placeholder="Seu primeiro nome" value="{{user_db.first_name}}">
+                            <span class="icon_profile"></span>
                         </div>
                         <div class="input__item">
-                            <input type="password" class="form-group" id="password2" name="password2" placeholder="Confirme a nova senha">
-                            <span class="icon_lock"></span>
+                            <input type="text" id="last_name" name="last_name" placeholder="Seu sobrenome" value="{{user_db.last_name}}">
+                            <span class="icon_profile"></span>
                         </div>
+                        <div style="margin-bottom: 10px;">
+                            <input type="checkbox" id="is_admin" name="is_admin" {{ "checked" if user_db.is_admin == True }}>
+                            <span style="color:white">Administrador</span>
+                        </div>
+                        
                         <button type="submit" class="site-btn">Salvar</button>
                     </form>
                 </div>
