@@ -227,7 +227,7 @@ def admin_products_import():
         db.session.commit()
 
         flash('Produtos importados com sucesso!', category='success')
-        return redirect(url_for('views.admin'))
+        return redirect(url_for('views.admin_product'))
 
 
     return render_template("admin_prod_import.html", user=current_user, categories=categories)
